@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antony Evan Alosius — Data Scientist | Machine Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E13;
+    --surface:#12161D;
+    --surface-2:#171C24;
+    --line:#232A35;
+    --ink:#E8ECF1;
+    --ink-soft:#8B96A5;
+    --ink-faint:#525C6B;
+    --blue:#4A8DFF;
+    --blue-dim:#101E33;
+    --red:#F2555A;
+    --amber:#F5A524;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Inter',sans-serif; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .display{font-family:'Sora',sans-serif;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:960px; margin:0 auto; padding:0 24px;}
+  ::selection{background:var(--blue); color:#fff;}
+
+  nav{
+    position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:rgba(11,14,19,0.85); border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .logo{font-family:'Sora',sans-serif; font-weight:600; font-size:16px;}
+  .navlinks{display:flex; gap:28px; font-size:14px; color:var(--ink-soft);}
+  .navlinks a{text-decoration:none; transition:color .15s;}
+  .navlinks a:hover{color:var(--ink);}
+
+  .hero{padding:88px 0 60px; position:relative; overflow:hidden;}
+  .scatter-bg{position:absolute; top:-40px; right:-60px; width:420px; height:420px; opacity:.5; pointer-events:none;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--blue); margin-bottom:20px;
+  }
+  h1{
+    font-family:'Sora',sans-serif; font-weight:700; font-size:44px; line-height:1.12;
+    letter-spacing:-0.01em; max-width:660px; margin-bottom:18px; position:relative;
+  }
+  h1 .accent{color:var(--blue);}
+  .hero p.lede{font-size:17px; color:var(--ink-soft); max-width:540px; margin-bottom:26px; position:relative;}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap; position:relative;}
+  .status-strip{display:flex; gap:20px; margin-top:28px; flex-wrap:wrap;}
+  .status-item{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace;}
+  .s-dot{width:7px; height:7px; border-radius:50%; flex-shrink:0;}
+  .s-dot.live{background:var(--blue); box-shadow:0 0 0 4px var(--blue-dim);}
+  .s-dot.progress{background:transparent; border:1px dashed var(--ink-faint);}
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14px; padding:12px 22px;
+    border-radius:8px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .12s; border:1px solid transparent;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--blue); color:#fff;}
+  .btn-secondary{background:transparent; color:var(--ink); border-color:var(--line);}
+  .btn-secondary:hover{border-color:var(--ink-soft);}
+
+  section{padding:60px 0; border-top:1px solid var(--line);}
+  .section-head{margin-bottom:32px;}
+  .section-tag{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--amber); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px;}
+  h2{font-family:'Sora',sans-serif; font-size:24px; font-weight:600; letter-spacing:-0.01em;}
+  .section-sub{color:var(--ink-soft); font-size:14px; margin-top:8px; max-width:560px;}
+
+  .project-grid{display:grid; grid-template-columns:1fr; gap:14px; margin-top:24px;}
+  .project-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 24px;
+    cursor:pointer; transition:border-color .15s, transform .12s; display:flex; gap:20px; align-items:center;
+  }
+  .project-card:hover{border-color:var(--blue); transform:translateY(-2px);}
+  .project-card .sparkline{flex-shrink:0; width:96px; height:44px;}
+  .project-card .body{flex:1; min-width:0;}
+  .project-card .prow{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:6px;}
+  .project-card h3{font-family:'Sora',sans-serif; font-size:16px; font-weight:600;}
+  .project-card .status{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--blue); background:var(--blue-dim);
+    border-radius:20px; padding:4px 10px; white-space:nowrap; display:flex; align-items:center; gap:6px; flex-shrink:0;
+  }
+  .project-card .status .d{width:6px; height:6px; border-radius:50%; background:var(--blue);}
+  .project-card p{font-size:13.5px; color:var(--ink-soft); margin-bottom:8px;}
+  .stack-preview{display:flex; gap:6px; flex-wrap:wrap;}
+  .mini-chip{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint); background:var(--surface-2);
+    border:1px solid var(--line); border-radius:4px; padding:3px 8px;
+  }
+  .project-card.placeholder{cursor:default; border-style:dashed; opacity:.6;}
+  .project-card.placeholder:hover{transform:none; border-color:var(--line);}
+  .project-card.placeholder .status{color:var(--ink-faint); background:transparent; border:1px dashed var(--ink-faint);}
+  .project-card.placeholder .status .d{background:var(--ink-faint);}
+
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(6,8,10,0.7); backdrop-filter:blur(4px); z-index:100;
+    display:none; align-items:flex-start; justify-content:center; padding:48px 20px; overflow-y:auto;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--surface); border:1px solid var(--line); border-radius:16px; max-width:760px; width:100%; padding:32px; position:relative;}
+  .modal-close{
+    position:absolute; top:20px; right:20px; background:var(--surface-2); border:1px solid var(--line);
+    color:var(--ink-soft); width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:16px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-close:hover{color:var(--ink); border-color:var(--ink-soft);}
+  .modal h3{font-family:'Sora',sans-serif; font-size:22px; margin-bottom:8px;}
+  .modal .modal-sub{color:var(--ink-soft); font-size:14px; margin-bottom:26px;}
+  .modal .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:8px;}
+  .modal .stat-card{background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:16px;}
+  .modal .stat-num{font-family:'Sora',sans-serif; font-size:22px; font-weight:700; color:var(--blue);}
+  .modal .stat-label{font-size:12px; color:var(--ink-soft); margin-top:4px;}
+  .modal-section-title{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--amber); text-transform:uppercase; letter-spacing:.05em; margin:28px 0 16px;}
+
+  .chart-panel{background:var(--surface-2); border:1px solid var(--line); border-radius:14px; padding:22px 22px 14px;}
+  .chart-panel .label-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;}
+  .chart-title{font-size:13px; color:var(--ink-soft);}
+  .chart-title b{color:var(--ink);}
+  .legend{display:flex; gap:16px; font-size:12px; color:var(--ink-soft); align-items:center;}
+  .legend span{display:flex; align-items:center; gap:6px;}
+  .swatch{width:14px; height:2px; border-radius:2px; display:inline-block;}
+  svg.chart{width:100%; height:auto; display:block;}
+  .band{fill:var(--blue); opacity:.06;}
+  .path-red{stroke:var(--red); stroke-width:2.5; fill:none; stroke-dasharray:700; stroke-dashoffset:700; animation:draw 2s cubic-bezier(.4,0,.2,1) forwards .1s;}
+  .path-blue{stroke:var(--blue); stroke-width:2.5; fill:none; stroke-dasharray:700; stroke-dashoffset:700; animation:draw 2s cubic-bezier(.4,0,.2,1) forwards .3s;}
+  .dot{fill:var(--bg); stroke-width:2;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @media (prefers-reduced-motion: reduce){ .path-red,.path-blue{animation:none; stroke-dashoffset:0;} }
+  .chart-foot{font-size:12px; color:var(--ink-faint); margin-top:10px;}
+
+  .pipeline{display:flex; flex-direction:column; gap:0;}
+  .pnode{display:flex; gap:16px; position:relative;}
+  .pnode .rail{display:flex; flex-direction:column; align-items:center; width:20px; flex-shrink:0;}
+  .pnode .dot2{width:10px; height:10px; border-radius:50%; background:var(--blue); margin-top:5px; flex-shrink:0;}
+  .pnode .connector{width:2px; flex:1; background:var(--line); margin-top:2px;}
+  .pnode:last-child .connector{display:none;}
+  .pnode .content{padding-bottom:22px; flex:1;}
+  .pnode h4{font-size:14px; font-weight:600; margin-bottom:4px;}
+  .pnode p{font-size:13px; color:var(--ink-soft);}
+  .modal-links{display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;}
+
+  .skill-groups{display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:20px;}
+  .skill-group h4{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:12px;}
+
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:44px; margin-top:24px;}
+  .about-text p{font-size:14.5px; color:var(--ink-soft); margin-bottom:14px; max-width:500px;}
+  .about-text strong{color:var(--ink); font-weight:600;}
+  .contact-card{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px;}
+  .contact-row{display:flex; align-items:center; gap:10px; padding:12px 0; border-bottom:1px solid var(--line); font-size:14px;}
+  .contact-row:last-child{border-bottom:none;}
+  .contact-row .k{color:var(--ink-faint); width:76px; flex-shrink:0; font-size:12px;}
+  .contact-row a{text-decoration:none; color:var(--ink); border-bottom:1px solid var(--line);}
+  .contact-row a:hover{color:var(--blue); border-color:var(--blue);}
+
+  footer{padding:30px 0; text-align:center; font-size:13px; color:var(--ink-faint); border-top:1px solid var(--line);}
+
+  @media(max-width:720px){
+    h1{font-size:30px;}
+    .modal .stat-grid{grid-template-columns:1fr;}
+    .about-grid, .skill-groups{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+    .project-card{flex-direction:column; align-items:flex-start;}
+    .project-card .sparkline{display:none;}
+    .modal{padding:24px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">Antony Evan Alosius</div>
+    <div class="navlinks">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <svg class="scatter-bg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+    <div class="eyebrow">Data Scientist — Machine Learning &amp; Applied AI</div>
+    <h1>Machine learning systems, <span class="accent">designed, validated, and deployed.</span></h1>
+    <p class="lede">
+      Data science professional open to AI/ML roles internationally, with particular
+      interest in Spain and the EU. Each project is built end-to-end and benchmarked
+      against real-world performance standards, with the development process documented
+      transparently, including challenges encountered along the way.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">View Projects</a>
+      <a class="btn btn-secondary" href="https://github.com/Antonyevan" target="_blank">GitHub Profile</a>
+    </div>
+    <div class="status-strip">
+      <span class="status-item"><span class="s-dot live"></span>1 project deployed</span>
+      <span class="status-item"><span class="s-dot progress"></span>Additional work in development</span>
+    </div>
+  </div>
+</header>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">Projects</div>
+      <h2>Selected Work</h2>
+      <p class="section-sub">The first completed project, with additional work currently in development.</p>
+    </div>
+    <div class="project-grid" id="projectGrid"></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">Toolkit</div>
+      <h2>Technical Stack</h2>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h4>Modeling &amp; Data</h4>
+        <div class="stack-preview">
+          <span class="mini-chip">Python</span><span class="mini-chip">pandas</span><span class="mini-chip">scikit-learn</span>
+          <span class="mini-chip">Gradient Boosting</span><span class="mini-chip">Time-series validation</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Systems &amp; Deployment</h4>
+        <div class="stack-preview">
+          <span class="mini-chip">Streamlit</span><span class="mini-chip">GitHub Actions</span><span class="mini-chip">REST APIs</span>
+          <span class="mini-chip">Git</span><span class="mini-chip">Scheduled pipelines</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-tag">About</div>
+      <h2>Get in Touch</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p><strong>Data science postgraduate based in the UK, open to AI/ML roles worldwide.</strong></p>
+        <p>
+          I focus on problems with a measurable outcome — a forecast that either outperforms
+          the existing benchmark or it doesn't. This project began as a personal exercise and
+          developed into a system I am confident presenting to a hiring manager.
+        </p>
+        <p>Open to relocation internationally, with particular interest in Spain and the EU. Available for roles offering visa sponsorship.</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-row"><span class="k">Email</span> <a href="mailto:antonyevan007@gmail.com">antonyevan007@gmail.com</a></div>
+        <div class="contact-row"><span class="k">GitHub</span> <a href="https://github.com/Antonyevan" target="_blank">github.com/Antonyevan</a></div>
+        <div class="contact-row"><span class="k">LinkedIn</span> <a href="#" target="_blank">add-your-linkedin-url</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Built and deployed by Antony Evan Alosius</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+const scatterSvg = document.querySelector('.scatter-bg');
+let scatterMarkup = '';
+for (let i = 0; i < 60; i++) {
+  const x = Math.random() * 400;
+  const y = Math.random() * 400;
+  const r = Math.random() * 2 + 1;
+  const c = Math.random() > 0.5 ? '#4A8DFF' : '#F2555A';
+  scatterMarkup += `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" opacity="${(Math.random()*0.4+0.15).toFixed(2)}"/>`;
+}
+scatterSvg.innerHTML = scatterMarkup;
+
+const projects = [
+  {
+    id: 'solar-forecast',
+    name: 'Spain Solar Generation Forecast',
+    status: 'Deployed',
+    summary: 'A Gradient Boosting model forecasting solar power generation in Spain, benchmarked against Red Eléctrica de España\'s official forecast. Deployed with an automated pipeline that pulls live grid data on a schedule.',
+    stack: ['Python', 'scikit-learn', 'Streamlit', 'GitHub Actions', 'REE ESIOS API'],
+    sparkline: 'M0,32 L14,28 L28,24 L42,30 L56,20 L70,26 L84,14 L98,18',
+    stats: [
+      { num: '22%', label: 'Improvement over REE\'s 2018 forecast, validated across 6 months' },
+      { num: 'Retrained', label: 'Following identification of distribution shift in 2026 data' },
+      { num: '30 min', label: 'Live grid-data refresh interval, automated end-to-end' },
+    ],
+    journey: [
+      { title: 'Began with historical data', body: 'REE\'s live API was unavailable during the first week of development. Development proceeded using a well-established Kaggle dataset (2015–2018) rather than remaining blocked.' },
+      { title: 'Identified a genuine forecasting weakness', body: 'Analysis traced REE\'s largest 2018 forecast error to a localized storm system near Seville — a signal absent from the numeric weather feature but present in the categorical description.' },
+      { title: 'Built and validated a model', body: 'A time-respecting train/test split was used throughout to prevent data leakage. The resulting model outperformed REE\'s 2018 forecast by 22%, consistently across every month tested.' },
+      { title: 'Identified distribution shift', body: 'The 2018-trained model\'s predictions plateaued near 5,000 MW when applied to 2026 data — Spain\'s installed solar capacity had grown beyond the range represented in training.' },
+      { title: 'Retrained on current data', body: 'Rather than claim the model adapts automatically, a second model was trained on a recent year of live data — the standard response to distribution shift in a production system.' },
+      { title: 'Automated the data pipeline', body: 'Two scheduled workflows keep the live cache and training dataset current without manual intervention.' },
+    ],
+    links: [
+      { label: 'View Live Dashboard', url: 'https://ree-solar-forecast.streamlit.app', primary: true },
+      { label: 'View Source on GitHub', url: 'https://github.com/Antonyevan/ree-generation-forecast', primary: false },
+    ]
+  }
+];
+
+const grid = document.getElementById('projectGrid');
+projects.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'project-card';
+  card.innerHTML = `
+    <svg class="sparkline" viewBox="0 0 98 44" xmlns="http://www.w3.org/2000/svg">
+      <path d="${p.sparkline}" fill="none" stroke="#4A8DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="body">
+      <div class="prow">
+        <h3>${p.name}</h3>
+        <span class="status"><span class="d"></span>${p.status}</span>
+      </div>
+      <p>${p.summary}</p>
+      <div class="stack-preview">${p.stack.map(s => `<span class="mini-chip">${s}</span>`).join('')}</div>
+    </div>
+  `;
+  card.addEventListener('click', () => openModal(p));
+  grid.appendChild(card);
+});
+
+const placeholders = [
+  { name: 'Second project — in development', note: 'Applying the same build, validate, and deploy methodology to a new domain.' },
+  { name: 'Third project — planned', note: 'Further details available on GitHub as development progresses.' },
+];
+placeholders.forEach(ph => {
+  const card = document.createElement('div');
+  card.className = 'project-card placeholder';
+  card.innerHTML = `
+    <div class="body">
+      <div class="prow">
+        <h3 style="color:var(--ink-soft)">${ph.name}</h3>
+        <span class="status"><span class="d"></span>In progress</span>
+      </div>
+      <p>${ph.note}</p>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+function openModal(p) {
+  const modal = document.getElementById('modalContent');
+  modal.innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>${p.name}</h3>
+    <div class="modal-sub">${p.summary}</div>
+    <a href="${p.links[0].url}" target="_blank" class="btn btn-primary" style="margin-bottom:26px;">${p.links[0].label} ↗</a>
+    <div class="stat-grid">
+      ${p.stats.map(s => `<div class="stat-card"><div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div></div>`).join('')}
+    </div>
+    <div class="modal-section-title">Development Process</div>
+    <div class="pipeline">
+      ${p.journey.map((j, i) => `
+        <div class="pnode">
+          <div class="rail"><div class="dot2"></div><div class="connector"></div></div>
+          <div class="content"><h4>${j.title}</h4><p>${j.body}</p></div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="modal-section-title">Technical Stack</div>
+    <div class="stack-preview">${p.stack.map(s => `<span class="mini-chip">${s}</span>`).join('')}</div>
+    <div class="modal-links">
+      ${p.links.map(l => `<a class="btn ${l.primary ? 'btn-primary' : 'btn-secondary'}" href="${l.url}" target="_blank">${l.label}</a>`).join('')}
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e.target.id === 'modalOverlay') closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>
