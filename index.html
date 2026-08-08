@@ -4,10 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Antony Evan Alosius — Data Scientist | Machine Learning</title>
-<meta property="og:title" content="Antony Evan Alosius — Data Scientist | Machine Learning">
-<meta property="og:description" content="Machine learning systems, designed, validated, and deployed. Data science professional open to AI/ML roles internationally.">
-<meta property="og:url" content="https://antonyevan.github.io/">
-<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -303,16 +299,17 @@ const projects = [
     stack: ['Python', 'scikit-learn', 'Streamlit', 'GitHub Actions', 'REE ESIOS API'],
     sparkline: 'M0,32 L14,28 L28,24 L42,30 L56,20 L70,26 L84,14 L98,18',
     stats: [
-      { num: '22%', label: 'Improvement over REE\'s 2018 forecast, validated across 6 months' },
-      { num: 'Retrained', label: 'Following identification of distribution shift in 2026 data' },
+      { num: 'Validated', label: 'Time-respecting train/test split; benchmarked against REE\'s real forecast, not a synthetic baseline' },
+      { num: 'Corrected', label: 'A data leakage defect was identified and fixed post-deployment — see live dashboard for current figures' },
       { num: '30 min', label: 'Live grid-data refresh interval, automated end-to-end' },
     ],
     journey: [
       { title: 'Began with historical data', body: 'REE\'s live API was unavailable during the first week of development. Development proceeded using a well-established Kaggle dataset (2015–2018) rather than remaining blocked.' },
       { title: 'Identified a genuine forecasting weakness', body: 'Analysis traced REE\'s largest 2018 forecast error to a localized storm system near Seville — a signal absent from the numeric weather feature but present in the categorical description.' },
-      { title: 'Built and validated a model', body: 'A time-respecting train/test split was used throughout to prevent data leakage. The resulting model outperformed REE\'s 2018 forecast by 22%, consistently across every month tested.' },
+      { title: 'Built and validated a model', body: 'A time-respecting train/test split was used throughout to prevent temporal data leakage. The resulting model was initially reported to outperform REE\'s 2018 forecast significantly — a claim later corrected (see below).' },
       { title: 'Identified distribution shift', body: 'The 2018-trained model\'s predictions plateaued near 5,000 MW when applied to 2026 data — Spain\'s installed solar capacity had grown beyond the range represented in training.' },
       { title: 'Retrained on current data', body: 'Rather than claim the model adapts automatically, a second model was trained on a recent year of live data — the standard response to distribution shift in a production system.' },
+      { title: 'Data leakage identified and corrected', body: 'Post-deployment validation of the reported improvement traced it to a rolling-average feature that included each hour\'s own actual value, giving the model partial visibility into the answer it was predicting. Root cause: an unshifted .rolling().mean() call. Fix: shifting the series by one hour before computing the average. With the defect corrected, the model\'s true performance is meaningfully lower than initially reported — current figures are shown live on the dashboard.' },
       { title: 'Automated the data pipeline', body: 'Two scheduled workflows keep the live cache and training dataset current without manual intervention.' },
     ],
     links: [
