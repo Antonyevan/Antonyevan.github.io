@@ -205,7 +205,7 @@
       <a class="btn btn-secondary" href="https://github.com/Antonyevan" target="_blank">GitHub Profile</a>
     </div>
     <div class="status-strip">
-      <span class="status-item"><span class="s-dot live"></span>1 project deployed</span>
+      <span class="status-item"><span class="s-dot live"></span>2 projects completed</span>
       <span class="status-item"><span class="s-dot progress"></span>Additional work in development</span>
     </div>
   </div>
@@ -216,7 +216,7 @@
     <div class="section-head">
       <div class="section-tag">Projects</div>
       <h2>Selected Work</h2>
-      <p class="section-sub">The first completed project, with additional work currently in development.</p>
+      <p class="section-sub">Two completed projects — one supervised, one unsupervised — with additional work currently in development.</p>
     </div>
     <div class="project-grid" id="projectGrid"></div>
   </div>
@@ -233,14 +233,16 @@
         <h4>Modeling &amp; Data</h4>
         <div class="stack-preview">
           <span class="mini-chip">Python</span><span class="mini-chip">pandas</span><span class="mini-chip">scikit-learn</span>
-          <span class="mini-chip">Gradient Boosting</span><span class="mini-chip">Time-series validation</span>
+          <span class="mini-chip">Gradient Boosting</span><span class="mini-chip">Clustering (DBSCAN, K-Means, GMM)</span>
+          <span class="mini-chip">Time-series validation</span>
         </div>
       </div>
       <div class="skill-group">
         <h4>Systems &amp; Deployment</h4>
         <div class="stack-preview">
           <span class="mini-chip">Streamlit</span><span class="mini-chip">GitHub Actions</span><span class="mini-chip">REST APIs</span>
-          <span class="mini-chip">Git</span><span class="mini-chip">Scheduled pipelines</span>
+          <span class="mini-chip">Docker</span><span class="mini-chip">MLflow</span><span class="mini-chip">pytest / CI</span>
+          <span class="mini-chip">Git</span>
         </div>
       </div>
     </div>
@@ -258,7 +260,8 @@
         <p><strong>Data science postgraduate based in the UK, open to AI/ML roles worldwide.</strong></p>
         <p>
           I focus on problems with a measurable outcome — a forecast that either outperforms
-          the existing benchmark or it doesn't. This project began as a personal exercise and
+          the existing benchmark or it doesn't, a clustering result that either separates
+          meaningfully or it doesn't. Each project here started as a personal exercise and
           developed into a system I am confident presenting to a hiring manager.
         </p>
         <p>Open to relocation internationally, with particular interest in Spain and the EU. Available for roles offering visa sponsorship.</p>
@@ -296,7 +299,7 @@ const projects = [
     name: 'Spain Solar Generation Forecast',
     status: 'Deployed',
     summary: 'A Gradient Boosting model forecasting solar power generation in Spain, benchmarked against Red Eléctrica de España\'s official forecast. Deployed with an automated pipeline that pulls live grid data on a schedule.',
-    stack: ['Python', 'scikit-learn', 'Streamlit', 'GitHub Actions', 'REE ESIOS API'],
+    stack: ['Python', 'scikit-learn', 'Streamlit', 'GitHub Actions', 'Docker', 'MLflow', 'pytest'],
     sparkline: 'M0,32 L14,28 L28,24 L42,30 L56,20 L70,26 L84,14 L98,18',
     stats: [
       { num: 'Validated', label: 'Time-respecting train/test split; benchmarked against REE\'s real forecast, not a synthetic baseline' },
@@ -311,10 +314,36 @@ const projects = [
       { title: 'Retrained on current data', body: 'Rather than claim the model adapts automatically, a second model was trained on a recent year of live data — the standard response to distribution shift in a production system.' },
       { title: 'Data leakage identified and corrected', body: 'Post-deployment validation of the reported improvement traced it to a rolling-average feature that included each hour\'s own actual value, giving the model partial visibility into the answer it was predicting. Root cause: an unshifted .rolling().mean() call. Fix: shifting the series by one hour before computing the average. With the defect corrected, the model\'s true performance is meaningfully lower than initially reported — current figures are shown live on the dashboard.' },
       { title: 'Automated the data pipeline', body: 'Two scheduled workflows keep the live cache and training dataset current without manual intervention.' },
+      { title: 'Added automated testing and experiment tracking', body: 'A pytest suite locks in the leakage fix with regression tests, enforced by CI on every push. MLflow logs every training run\'s parameters and metrics for a permanent, queryable history.' },
+      { title: 'Containerized the system', body: 'The dashboard and training pipeline were split into two separate Docker containers, reflecting their different operational roles — a persistent service versus a one-shot job.' },
+      { title: 'Separated training from serving', body: 'The dashboard was found to be silently retraining a fresh model on every load, disconnected from the tracked training pipeline. Refactored so training happens as a deliberate step, producing a model file the dashboard simply loads — the standard production pattern.' },
     ],
     links: [
       { label: 'View Live Dashboard', url: 'https://ree-solar-forecast.streamlit.app', primary: true },
       { label: 'View Source on GitHub', url: 'https://github.com/Antonyevan/ree-generation-forecast', primary: false },
+    ]
+  },
+  {
+    id: 'supernova-clustering',
+    name: 'Type Ia Supernova Classification via NIR Spectral Clustering',
+    status: 'Completed',
+    summary: 'Unsupervised classification of 98 Type Ia supernovae into three known subtypes — "Bright," "Fast," and "Dim" — using near-infrared spectral features, comparing DBSCAN, K-Means, and Gaussian Mixture Models against each other rather than trusting a single method\'s output.',
+    stack: ['Python', 'scikit-learn', 'DBSCAN', 'K-Means', 'Gaussian Mixture Models', 'astropy', 'pandas'],
+    sparkline: 'M0,20 L12,12 L24,26 L36,10 L48,30 L60,16 L72,22 L84,8 L98,18',
+    stats: [
+      { num: '98', label: 'Individual Type Ia supernovae classified, using NIR spectra from the Carnegie Supernova Project-II (CSP-II)' },
+      { num: '3 vs 1', label: 'Three clustering algorithms compared against each other, not just one applied by default' },
+      { num: 'GMM', label: 'Emerged as the most successful method — the others revealed real limitations, not just a clean win' },
+    ],
+    journey: [
+      { title: 'Defined the classification target', body: 'Aimed to classify SNe Ia into three known subtypes — Bright, Fast, and Dim — using the velocity of the Calcium II (Ca II) 8662 Å absorption line and I-band magnitude, derived from NIR spectra published in Lu et al. 2023.' },
+      { title: 'Compared three clustering algorithms deliberately', body: 'DBSCAN, K-Means, and GMM make different assumptions about cluster shape. Running all three and comparing was a deliberate choice — a result only one algorithm produces is weaker evidence than one multiple algorithms agree on.' },
+      { title: 'DBSCAN did not work', body: 'DBSCAN failed to produce meaningful clusters — the dataset lacks the density-based structure DBSCAN depends on. This was treated as a real, informative finding, not a failed attempt to hide.' },
+      { title: 'K-Means partially worked', body: 'K-Means clearly identified the "Fast" subtype but struggled to separate "Bright" from "Dim" — a direct consequence of its assumption that clusters are spherical, which doesn\'t hold for this data.' },
+      { title: 'GMM was the most successful', body: 'GMM\'s ability to model non-spherical, overlapping clusters produced classifications that aligned well with the three expected subtypes — the deciding factor was matching the algorithm to the data\'s actual structure, not an arbitrary preference.' },
+    ],
+    links: [
+      { label: 'View Source on GitHub', url: 'https://github.com/Antonyevan/Supernovae-Clustering', primary: true },
     ]
   }
 ];
@@ -341,8 +370,7 @@ projects.forEach(p => {
 });
 
 const placeholders = [
-  { name: 'Second project — in development', note: 'Applying the same build, validate, and deploy methodology to a new domain.' },
-  { name: 'Third project — planned', note: 'Further details available on GitHub as development progresses.' },
+  { name: 'Third project — planned', note: 'An LLM-powered application with a real evaluation harness — applying the same build, validate, and deploy methodology to a new domain.' },
 ];
 placeholders.forEach(ph => {
   const card = document.createElement('div');
